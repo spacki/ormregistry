@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+   elementFormDefault="qualified"
+   targetNamespace="http://gehcit.com/platform/cws/orm/types/ormInformation"
+   version="1.0"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:cmt="http://gehcit.com/platform/cws/types/coreMessageTypes">
+   
+   <xs:import namespace="http://gehcit.com/platform/cws/types/coreMessageTypes" schemaLocation="CoreMessageTypes.xsd"/>
+   
+   <xs:annotation>
+      <xs:documentation>
+         Contains ORM message information to support GP Portal use cases.
+      </xs:documentation>
+   </xs:annotation>
+   <xs:complexType name="OrderFull">
+      <xs:annotation>
+         <xs:documentation source="urn:ge:csm" xml:lang="en">
+            Defines a list of examination details for a patient.
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="cmt:MessageElement">
+            <xs:sequence>
+               <xs:element name="hospitalDomainName" minOccurs="1" maxOccurs="1" type="cmt:GPHospitalDomainNameDetail">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Denotes Hospital Domain name and Domain Id
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+               <xs:element name="localpatientIdentifier" minOccurs="1" maxOccurs="1" type="cmt:GPPatientIdentifier">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Represents the local patient identifier of the patient to be queried for, in the target patient information source.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>    
+               
+                <xs:element name="orderID" minOccurs="1" maxOccurs="1" type="cmt:ID">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Represents the  The value of the Order Number.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+                 <xs:element name="accessionNumber" minOccurs="1" maxOccurs="1" type="cmt:GPOrderAccessionNumber">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Represents the accession number of the patient to be queried for, in the target patient information source.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>      
+               
+               <xs:element name="patientName" minOccurs="1" maxOccurs="1" type="cmt:GPPatientNameDetail">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Denotes patient name.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+               <xs:element name="patientIdentifier" minOccurs="1" maxOccurs="1" type="cmt:GPPatientIdentifier">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Represents the primary patient identifier of the patient to be queried for, in the target patient information source.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+               <xs:element name="genderCode" minOccurs="0" maxOccurs="1">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        A search key for the patient&#39;s gender code.
+                     </xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                     <xs:restriction base="cmt:CS">
+                        <xs:enumeration value="F">
+                           <xs:annotation>
+                              <xs:documentation>Female</xs:documentation>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="M">
+                           <xs:annotation>
+                              <xs:documentation>Male</xs:documentation>
+                           </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="U">
+                           <xs:annotation>
+                              <xs:documentation>Unknown</xs:documentation>
+                           </xs:annotation>
+                        </xs:enumeration>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               
+               <xs:element name="birthDate" minOccurs="1" maxOccurs="1" type="cmt:TS"/>
+               
+              
+               
+               <!-- Should the following element be a mandatory field ? -->
+                <xs:element name="orderStudyInstanceUID" minOccurs="0" maxOccurs="1" type="cmt:ID">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Represents the orderStudyInstanceUID of the ORM to be queried for.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>   
+                          
+               
+              <!-- Should the following element be a mandatory field ? -->
+               <xs:element name="scheduledVisitDate" minOccurs="0" maxOccurs="1" type="cmt:TS">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        ORM Scheduled Visit Date Time, supporting a TS range definition
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               
+               <!-- Should the following element be a mandatory field ? Also, is 256 chars enough ? -->               
+               <xs:element name="orderDesc" minOccurs="0" maxOccurs="1" type="cmt:ST256">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        A description of the ORM Order.
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>    
+               
+                   
+               
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+   elementFormDefault="qualified"
+   targetNamespace="http://gehcit.com/platform/cws/orm/types"
+   version="1.0"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:orm="http://gehcit.com/platform/cws/orm/types/ormInformation"
+   xmlns:cmt="http://gehcit.com/platform/cws/types/coreMessageTypes"
+   xmlns:tns="http://gehcit.com/platform/cws/orm/types">
+   
+   <xs:import namespace="http://gehcit.com/platform/cws/types/coreMessageTypes" schemaLocation="CoreMessageTypes.xsd"/>
+   <xs:import namespace="http://gehcit.com/platform/cws/orm/types/ormInformation" schemaLocation="ORMInformation.xsd"/>
+
+   <!-- message types -->
+   
+<!-- use ReviseORMRequest for creation and updation-->  
+
+   <xs:complexType name="ReviseORMRequest">
+      <xs:sequence>
+         <xs:element name="order" minOccurs="1" maxOccurs="1" type="orm:OrderFull"/>
+      </xs:sequence>   
+   </xs:complexType>
+   <xs:complexType name="ReviseORMResponse">
+               <xs:sequence>
+                  <xs:element name="status" minOccurs="0" maxOccurs="1">             
+      	                      <xs:simpleType>
+      	                         <xs:restriction base="cmt:CS">
+      	                            <xs:enumeration value="SUCCESS">
+      	                               <xs:annotation>
+      	                                  <xs:documentation>Success</xs:documentation>
+      	                               </xs:annotation>
+      	                            </xs:enumeration>
+      	                            <xs:enumeration value="FAILURE">
+      	                               <xs:annotation>
+      	                                  <xs:documentation>Failure</xs:documentation>
+      	                               </xs:annotation>
+      	                            </xs:enumeration>	                           
+      	                         </xs:restriction>
+                        </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="errordescription" minOccurs="0" maxOccurs="1" type="xs:string"/>  
+               </xs:sequence>   
+   </xs:complexType>
+   
+  
+   
+   <xs:complexType name="DeleteORMRequest">
+      <xs:sequence>
+         <xs:element name="order" minOccurs="1" maxOccurs="1" type="cmt:ID"/>
+      </xs:sequence>   
+   </xs:complexType>
+   <xs:complexType name="DeleteORMResponse">
+                  <xs:sequence>
+                     <xs:element name="status" minOccurs="0" maxOccurs="1">             
+         	                      <xs:simpleType>
+         	                         <xs:restriction base="cmt:CS">
+         	                            <xs:enumeration value="SUCCESS">
+         	                               <xs:annotation>
+         	                                  <xs:documentation>Success</xs:documentation>
+         	                               </xs:annotation>
+         	                            </xs:enumeration>
+         	                            <xs:enumeration value="FAILURE">
+         	                               <xs:annotation>
+         	                                  <xs:documentation>Failure</xs:documentation>
+         	                               </xs:annotation>
+         	                            </xs:enumeration>	                           
+         	                         </xs:restriction>
+                           </xs:simpleType>
+                           </xs:element>
+                           <xs:element name="errordescription" minOccurs="0" maxOccurs="1" type="xs:string"/>  
+                  </xs:sequence>   
+   </xs:complexType>
+   <xs:element name="ReviseORMRequest" type="tns:ReviseORMRequest"/>
+   <xs:element name="ReviseORMResponse" type="tns:ReviseORMResponse"/>
+   <xs:element name="DeleteORMRequest" type="tns:DeleteORMRequest"/>
+   <xs:element name="DeleteORMResponse" type="tns:DeleteORMResponse"/>
+</xs:schema>
