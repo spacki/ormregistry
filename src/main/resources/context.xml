@@ -35,6 +35,14 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <bean id="hapiModelExtension" class="org.openehealth.ipf.modules.hl7.extend.HapiModelExtension"></bean>
 
+    <bean id="deleteORM"
+          class="org.openehealth.ipf.ws.DeleteORM">
+    </bean>
+
+    <bean id="reviseORM"
+          class="org.openehealth.ipf.ws.ReviseORM">
+    </bean>
+
 
     <bean id="routeModelExtender" 
         class="org.openehealth.ipf.platform.camel.core.extend.DefaultModelExtender">
