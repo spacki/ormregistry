@@ -47,6 +47,8 @@
    <xs:complexType name="DeleteORMRequest">
       <xs:sequence>
          <xs:element name="order" minOccurs="1" maxOccurs="1" type="cmt:ID"/>
+         <xs:element name="hospitalDomainId" type="cmt:ST64" minOccurs="1" maxOccurs="1"></xs:element>
+         <xs:element name="acNoValue" type="cmt:ID" minOccurs="1" maxOccurs="1"></xs:element>
       </xs:sequence>   
    </xs:complexType>
    <xs:complexType name="DeleteORMResponse">

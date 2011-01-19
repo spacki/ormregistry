@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="order" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ID"/>
+ *         &lt;element name="hospitalDomainId" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ST64"/>
+ *         &lt;element name="acNoValue" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ID"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,13 +32,20 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DeleteORMRequest", namespace = "http://gehcit.com/platform/cws/orm/types", propOrder = {
-    "order"
+    "order",
+    "hospitalDomainId",
+    "acNoValue"
 })
 public class DeleteORMRequest {
 
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String order;
+    @XmlElement(required = true)
+    protected String hospitalDomainId;
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String acNoValue;
 
     /**
      * Gets the value of the order property.
@@ -60,6 +69,54 @@ public class DeleteORMRequest {
      */
     public void setOrder(String value) {
         this.order = value;
+    }
+
+    /**
+     * Gets the value of the hospitalDomainId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHospitalDomainId() {
+        return hospitalDomainId;
+    }
+
+    /**
+     * Sets the value of the hospitalDomainId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHospitalDomainId(String value) {
+        this.hospitalDomainId = value;
+    }
+
+    /**
+     * Gets the value of the acNoValue property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAcNoValue() {
+        return acNoValue;
+    }
+
+    /**
+     * Sets the value of the acNoValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAcNoValue(String value) {
+        this.acNoValue = value;
     }
 
 }

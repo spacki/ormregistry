@@ -28,7 +28,7 @@ class ReviseORM implements  Processor {
      GPHospitalDomainNameDetail hospitalName = new GPHospitalDomainNameDetail()
      println "Hospital Domain Name: " +   msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
      hospitalName.hospitalDomainName = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
-     hospitalName.hospitalDomainId   = "domianID"
+     hospitalName.hospitalDomainId   = "domainID"
      orderFull.hospitalDomainName = hospitalName
      GPPatientIdentifier patientIdentifier = new GPPatientIdentifier()
      println "Patient DomainID: " + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value

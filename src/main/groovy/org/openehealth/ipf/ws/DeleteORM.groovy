@@ -28,6 +28,8 @@ class DeleteORM implements Processor {
      println("StudyInstanceUID: " + StudyInstanceUID)
      DeleteORMRequest deleteORMRequest = new DeleteORMRequest()
      deleteORMRequest.order = accessionNbr
+     deleteORMRequest.hospitalDomainId = "domainId"
+     deleteORMRequest.acNoValue = accessionNbr
      exchange.out.body = deleteORMRequest
 
   }
