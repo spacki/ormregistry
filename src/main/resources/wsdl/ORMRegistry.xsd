@@ -46,10 +46,16 @@
    
    <xs:complexType name="DeleteORMRequest">
       <xs:sequence>
-         <xs:element name="order" minOccurs="1" maxOccurs="1" type="cmt:ID"/>
-         <xs:element name="hospitalDomainId" type="cmt:ST64" minOccurs="1" maxOccurs="1"></xs:element>
-         <xs:element name="acNoValue" type="cmt:ID" minOccurs="1" maxOccurs="1"></xs:element>
-      </xs:sequence>   
+      	<xs:element name="order" minOccurs="1" maxOccurs="1" type="cmt:ID" />
+      	<xs:element name="hospitalDomainName" minOccurs="1" maxOccurs="1" type="cmt:GPHospitalDomainNameDetail">
+                  <xs:annotation>
+                     <xs:documentation source="urn:ge:csm" xml:lang="en">
+                        Denotes Hospital Domain name and Domain Id
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+      	<xs:element name="acNoValue" type="cmt:ID" minOccurs="1" maxOccurs="1"></xs:element>
+      </xs:sequence>
    </xs:complexType>
    <xs:complexType name="DeleteORMResponse">
                   <xs:sequence>

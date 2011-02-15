@@ -5,7 +5,7 @@
     <groupId>org.openehealth.ipf.ws</groupId>
     <artifactId>ormregistry</artifactId>
     <name>ormregistry</name>
-    <version>2.0-SNAPSHOT</version>
+    <version>3.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -17,6 +17,11 @@
         <dependency>
             <groupId>org.openehealth.ipf.platform-camel</groupId>
             <artifactId>platform-camel-hl7</artifactId>
+            <version>2.2-m4</version>
+        </dependency>
+         <dependency>
+            <groupId>org.openehealth.ipf.platform-camel</groupId>
+            <artifactId>platform-camel-ihe-pixpdq</artifactId>
             <version>2.2-m4</version>
         </dependency>
         <dependency>

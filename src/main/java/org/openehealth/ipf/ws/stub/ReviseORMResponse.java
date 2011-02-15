@@ -91,4 +91,8 @@ public class ReviseORMResponse {
         this.errordescription = value;
     }
 
+    public String toString() {
+        return "Revise ORM Return Status " + this.getStatus() + " description: " + this.getErrordescription();
+    }
+
 }

@@ -91,4 +91,8 @@ public class DeleteORMResponse {
         this.errordescription = value;
     }
 
+    public String toString() {
+        return "Delete ORM Return Status " + this.getStatus() + " description: " + this.getErrordescription();
+    }
+
 }

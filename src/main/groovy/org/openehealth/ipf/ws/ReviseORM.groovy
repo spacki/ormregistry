@@ -8,6 +8,11 @@ import org.openehealth.ipf.ws.stub.GPOrderAccessionNumber
 import org.openehealth.ipf.ws.stub.GPPatientNameDetail
 import org.openehealth.ipf.ws.stub.GPHospitalDomainNameDetail
 import org.openehealth.ipf.ws.stub.GPPatientIdentifier
+import org.openehealth.ipf.ws.util.Convert
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,6 +24,8 @@ import org.openehealth.ipf.ws.stub.GPPatientIdentifier
 
 class ReviseORM implements  Processor {
 
+  private static final transient Log LOG = LogFactory.getLog(ReviseORM.class);
+
 
 
   void process(Exchange exchange) {
@@ -26,50 +33,52 @@ class ReviseORM implements  Processor {
      ReviseORMRequest reviseORMRequest = new ReviseORMRequest()
      OrderFull orderFull = new OrderFull()
      GPHospitalDomainNameDetail hospitalName = new GPHospitalDomainNameDetail()
-     println "Hospital Domain Name: " +   msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
      hospitalName.hospitalDomainName = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
-     hospitalName.hospitalDomainId   = "domainID"
+     hospitalName.hospitalDomainId   = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
      orderFull.hospitalDomainName = hospitalName
-     GPPatientIdentifier patientIdentifier = new GPPatientIdentifier()
-     println "Patient DomainID: " + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
-     patientIdentifier.setDomainId(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value)
-     println "Type Code: " + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
-     patientIdentifier.setIdTypeCode(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value)
-     println "Patient Identifier: " + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
-     patientIdentifier.idValue = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
-     orderFull.patientIdentifier
+    //LocalPatientIdentifier
+     GPPatientIdentifier localPatientIdentifier = new GPPatientIdentifier()
+     localPatientIdentifier.domainId = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
+     localPatientIdentifier.idTypeCode =  msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][3].value
+     localPatientIdentifier.idValue = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
+     orderFull.localpatientIdentifier = localPatientIdentifier
+     //GlobalPatientIdentifier
+     GPPatientIdentifier globalPatientIdentifier = new GPPatientIdentifier()
+     globalPatientIdentifier.domainId = OrmConfiguration.sourceID;
+     //println "Patient DomainID: " + globalPatientIdentifier.domainId
+     globalPatientIdentifier.setIdTypeCode('ISO')
+     def prefixMap = PrefixLookup.prefixMap
+     def prefix = prefixMap.get(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
+     globalPatientIdentifier.idValue = prefix + "_" + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
+     orderFull.patientIdentifier = globalPatientIdentifier
      GPPatientNameDetail patientName = new GPPatientNameDetail()
-     def first = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[5][2].value
-     def last  = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[5][1][1].value
-     patientName.lastName = last
-     patientName.firstName = first
-     println "patient name " + last + "^" + first
-     orderFull.patientName
+     patientName.firstName = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[5][2].value
+     patientName.lastName  = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[5][1][1].value
+     orderFull.patientName = patientName
      GPOrderAccessionNumber accessionNumber = new GPOrderAccessionNumber()
-     println "accession number: " + msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[20].value
-     accessionNumber.acNoValue = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[20].value
-     orderFull.accessionNumber
-
+     accessionNumber.acNoValue = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[18].value
+     orderFull.accessionNumber = accessionNumber
      // direct from Message
-     println "Patient BirthDate: " + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[7].value
-     orderFull.birthDate = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[7].value
-     println "Patient GenderCode: " +    msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[8].value
+     orderFull.birthDate = Convert.convert(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[7].value)
      orderFull.genderCode = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[8].value
-     println "scheduled Date: " +  msg.ORCRQDRQ1NTEOBXNTEBLG.ORC[7][4].value
-     orderFull.scheduledVisitDate = msg.ORCRQDRQ1NTEOBXNTEBLG.ORC[7][4].value
-     println "Order Description: " + msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[31].value
-     orderFull.orderDesc = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[31].value
-     println "Order ID: " +  msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[3].value
+     orderFull.scheduledVisitDate = Convert.convertDateTime(msg.ORCRQDRQ1NTEOBXNTEBLG.ORC[7][4].value)
+     orderFull.orderDesc = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[4][2].value
      orderFull.orderID = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[3].value
-     println "Study Instance UID: " +  msg.ORCRQDRQ1NTEOBXNTEBLG.ZDS[1][1].value
      orderFull.orderStudyInstanceUID = msg.ORCRQDRQ1NTEOBXNTEBLG.ZDS[1][1].value
-
      reviseORMRequest.order = orderFull
+     LOG.debug("Revise Request Parameter")
+     LOG.debug('Hospital Domain ID: ' + orderFull.hospitalDomainName.getHospitalDomainId())
+     LOG.debug('Hospital Domain Name:' + orderFull.hospitalDomainName.getHospitalDomainName())
+     LOG.debug('Local Patient ID: ' + orderFull.localpatientIdentifier.getIdValue())
+     LOG.debug('Global Patient ID: ' + orderFull.patientIdentifier.getIdValue())
+     LOG.debug('Patient Name: ' + orderFull.patientName.getLastName() + '^' + orderFull.patientName.getFirstName())
+     LOG.debug('Patient Birthdate: ' + orderFull.getBirthDate())
+     LOG.debug('Patient Gender: ' + orderFull.getGenderCode())
+     LOG.debug('AccessionNumber: ' + orderFull.accessionNumber.getAcNoValue())
+     LOG.debug('Scheduled Visit Date: ' + orderFull.getScheduledVisitDate())
+     LOG.debug('Order ID: ' + orderFull.getOrderID());
+     LOG.debug('Order Description: ' + orderFull.getOrderDesc())
+     LOG.debug('Study Instance UID: ' + orderFull.getOrderStudyInstanceUID())
      exchange.out.body = reviseORMRequest
-
-
-
   }
-
-
 }

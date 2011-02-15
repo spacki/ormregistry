@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="order" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ID"/>
- *         &lt;element name="hospitalDomainId" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ST64"/>
+ *         &lt;element name="hospitalDomainName" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}GPHospitalDomainNameDetail"/>
  *         &lt;element name="acNoValue" type="{http://gehcit.com/platform/cws/types/coreMessageTypes}ID"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DeleteORMRequest", namespace = "http://gehcit.com/platform/cws/orm/types", propOrder = {
     "order",
-    "hospitalDomainId",
+    "hospitalDomainName",
     "acNoValue"
 })
 public class DeleteORMRequest {
@@ -42,7 +42,7 @@ public class DeleteORMRequest {
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String order;
     @XmlElement(required = true)
-    protected String hospitalDomainId;
+    protected GPHospitalDomainNameDetail hospitalDomainName;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String acNoValue;
@@ -72,27 +72,27 @@ public class DeleteORMRequest {
     }
 
     /**
-     * Gets the value of the hospitalDomainId property.
+     * Gets the value of the hospitalDomainName property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link GPHospitalDomainNameDetail }
      *     
      */
-    public String getHospitalDomainId() {
-        return hospitalDomainId;
+    public GPHospitalDomainNameDetail getHospitalDomainName() {
+        return hospitalDomainName;
     }
 
     /**
-     * Sets the value of the hospitalDomainId property.
+     * Sets the value of the hospitalDomainName property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link GPHospitalDomainNameDetail }
      *     
      */
-    public void setHospitalDomainId(String value) {
-        this.hospitalDomainId = value;
+    public void setHospitalDomainName(GPHospitalDomainNameDetail value) {
+        this.hospitalDomainName = value;
     }
 
     /**

@@ -20,6 +20,13 @@
         <format>zip</format>
     </formats>
     <fileSets>
+         <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>orm.properties</include>
+            </includes>
+        </fileSet>
         <fileSet>
             <includes>
                 <include>startup*</include>

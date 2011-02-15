@@ -12,7 +12,7 @@ import org.apache.camel.spring.Main
 class SampleServer {
 
    static void main(String[] args) {
-    Main.main("-ac", "/context.xml");
+    Main.main("-ac", "conf/context.xml");
 
   }
 

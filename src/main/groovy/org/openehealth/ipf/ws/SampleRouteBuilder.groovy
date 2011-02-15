@@ -5,7 +5,8 @@ import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.openehealth.ipf.modules.hl7.message.MessageUtils
 import static org.openehealth.ipf.platform.camel.core.util.Exchanges.resultMessage
-import org.openehealth.ipf.modules.hl7.AckTypeCode;
+import org.openehealth.ipf.modules.hl7.AckTypeCode
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 class SampleRouteBuilder extends SpringRouteBuilder {
 
@@ -13,7 +14,9 @@ class SampleRouteBuilder extends SpringRouteBuilder {
 
     void configure() {
 
-        from("mina:tcp://0.0.0.0:8413?sync=true&codec=#hl7codec")
+        //from("mina:tcp://0.0.0.0:8413?sync=true&codec=#hl7codec")   //${AdtConfiguration.adtInputURL}
+        from("mina:tcp://${OrmConfiguration.ormInputURL}?sync=true&codec=#hl7codec")
+            .output('Received message', null)
             .to('direct:input1')
 
         from('direct:input1')
@@ -49,15 +52,33 @@ class SampleRouteBuilder extends SpringRouteBuilder {
         //  Dequeue, transform and process request
         // -------------------------------------------------------------
         from('seda:valid')
+            .multicast()
+            .parallelProcessing()
+            .to('direct:gpportal','direct:ehcp')
+
+        //eHCP branch
+        from('direct:ehcp')
+           .output('ehcp branch', null)
+           .processRef('orm2adtConverter')
+           .output('ehcp adt message', null)
+           .to("xds-iti8://${OrmConfiguration.adtEhcpURL}?sync=false&codec=#hl7codec")
+           .output('eHCP Response', null)
+
+        // GPPortal branch
+        from('direct:gpportal')
            .choice()
            .when {it.in.body.ORCRQDRQ1NTEOBXNTEBLG.ORC[1].value == 'CA'}
-                .process { println "Order Delete: :\n" + it.in.body}
+                .output('Delete Order')
+                //.process { println "Order Delete: :\n" + it.in.body}
                 .processRef('deleteORM')
                 .to('direct:inputDelete')
+                .output('WEB Service Delete Response:', null )
            .otherwise()
-                .process { println "Revise Order :\n" + it.in.body}
+                .output('Revise Order')
+                //.process { println "Revise Order :\n" + it.in.body}
                 .processRef('reviseORM')
                 .to('direct:inputRevise')
+                .output('WEB Service Revise Response:', null )
 
 
 

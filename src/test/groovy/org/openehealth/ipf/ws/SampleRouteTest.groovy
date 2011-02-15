@@ -63,7 +63,7 @@ class SampleRouteTest {
     }
 
 
-    @Test
+    @Test     @Ignore
     void routeTestReviseOrmRequest() {
       ReviseORMRequest ror = of.createReviseORMRequest()
       ror.setOrder of.createOrderFull()
@@ -73,7 +73,7 @@ class SampleRouteTest {
       assertEquals("RevisePatientResponse No error",response.errordescription[0] )
     }
 
-    @Test
+    @Test               @Ignore
     void routeTestDeleteOrmRequest() {
        DeleteORMRequest dor = of.createDeleteORMRequest()
        dor.setOrder("1234")

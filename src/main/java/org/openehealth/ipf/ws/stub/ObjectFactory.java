@@ -37,75 +37,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link OrderFull }
-     * 
-     */
-    public OrderFull createOrderFull() {
-        return new OrderFull();
-    }
-
-    /**
-     * Create an instance of {@link DeleteORMResponse }
-     * 
-     */
-    public DeleteORMResponse createDeleteORMResponse() {
-        return new DeleteORMResponse();
-    }
-
-    /**
-     * Create an instance of {@link GPOrderAccessionNumber }
-     * 
-     */
-    public GPOrderAccessionNumber createGPOrderAccessionNumber() {
-        return new GPOrderAccessionNumber();
-    }
-
-    /**
-     * Create an instance of {@link GPPatientIdentifier }
-     * 
-     */
-    public GPPatientIdentifier createGPPatientIdentifier() {
-        return new GPPatientIdentifier();
-    }
-
-    /**
      * Create an instance of {@link ReviseORMRequest }
      * 
      */
     public ReviseORMRequest createReviseORMRequest() {
         return new ReviseORMRequest();
-    }
-
-    /**
-     * Create an instance of {@link GPHospitalDomainNameDetail }
-     * 
-     */
-    public GPHospitalDomainNameDetail createGPHospitalDomainNameDetail() {
-        return new GPHospitalDomainNameDetail();
-    }
-
-    /**
-     * Create an instance of {@link ExtensionItem }
-     * 
-     */
-    public ExtensionItem createExtensionItem() {
-        return new ExtensionItem();
-    }
-
-    /**
-     * Create an instance of {@link ReviseORMResponse }
-     * 
-     */
-    public ReviseORMResponse createReviseORMResponse() {
-        return new ReviseORMResponse();
-    }
-
-    /**
-     * Create an instance of {@link Extension }
-     * 
-     */
-    public Extension createExtension() {
-        return new Extension();
     }
 
     /**
@@ -117,11 +53,75 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link OrderFull }
+     * 
+     */
+    public OrderFull createOrderFull() {
+        return new OrderFull();
+    }
+
+    /**
+     * Create an instance of {@link ExtensionItem }
+     * 
+     */
+    public ExtensionItem createExtensionItem() {
+        return new ExtensionItem();
+    }
+
+    /**
      * Create an instance of {@link DeleteORMRequest }
      * 
      */
     public DeleteORMRequest createDeleteORMRequest() {
         return new DeleteORMRequest();
+    }
+
+    /**
+     * Create an instance of {@link GPOrderAccessionNumber }
+     * 
+     */
+    public GPOrderAccessionNumber createGPOrderAccessionNumber() {
+        return new GPOrderAccessionNumber();
+    }
+
+    /**
+     * Create an instance of {@link Extension }
+     * 
+     */
+    public Extension createExtension() {
+        return new Extension();
+    }
+
+    /**
+     * Create an instance of {@link GPPatientIdentifier }
+     * 
+     */
+    public GPPatientIdentifier createGPPatientIdentifier() {
+        return new GPPatientIdentifier();
+    }
+
+    /**
+     * Create an instance of {@link ReviseORMResponse }
+     * 
+     */
+    public ReviseORMResponse createReviseORMResponse() {
+        return new ReviseORMResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteORMResponse }
+     * 
+     */
+    public DeleteORMResponse createDeleteORMResponse() {
+        return new DeleteORMResponse();
+    }
+
+    /**
+     * Create an instance of {@link GPHospitalDomainNameDetail }
+     * 
+     */
+    public GPHospitalDomainNameDetail createGPHospitalDomainNameDetail() {
+        return new GPHospitalDomainNameDetail();
     }
 
     /**

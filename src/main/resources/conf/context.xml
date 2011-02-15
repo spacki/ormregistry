@@ -2,13 +2,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:lang="http://www.springframework.org/schema/lang"
        xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:ctx="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/beans 
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/lang 
 http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
 http://camel.apache.org/schema/spring 
 http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+    <ctx:property-placeholder location="classpath:orm.properties"/>
 
     <camel:camelContext id="camelContext">
         <camel:routeBuilder ref="routeBuilder"/>        
@@ -33,6 +39,8 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
         class="org.openehealth.ipf.platform.camel.ihe.mllp.core.extend.MllpModelExtension">
     </bean-->
 
+    <bean id="orm2adtConverter" class="org.openehealth.ipf.ws.util.Orm2AdtConverter" />
+
     <bean id="hapiModelExtension" class="org.openehealth.ipf.modules.hl7.extend.HapiModelExtension"></bean>
 
     <bean id="deleteORM"
@@ -43,7 +51,6 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
           class="org.openehealth.ipf.ws.ReviseORM">
     </bean>
 
-
     <bean id="routeModelExtender" 
         class="org.openehealth.ipf.platform.camel.core.extend.DefaultModelExtender">
         <property name="routeModelExtensions">
@@ -53,12 +60,33 @@ http://camel.apache.org/schema/spring/camel-spring.xsd">
                 <ref bean = "hl7ModelExtension"/>
                 <!--ref bean = "mllpModelExtension"/-->
                 <ref bean = "hapiModelExtension"/>
+                <ref bean = "ormConfiguration" />
             </list>
         </property>
     </bean>
 
+    <bean id="ormConfiguration"
+          class="org.openehealth.ipf.ws.OrmConfiguration">
+        <property name="sourceID" value="${sourceID}"/>
+        <property name="sourceName" value="${sourceName}"/>
+        <property name="ormInputURL" value="${ormInputUrl}"/>
+        <property name="webServiceURL" value="${webServiceUrl}"/>
+        <property name="wsdl" value="${wsdl}" />
+        <property name="adtEhcpURL" value="${eHCPAdtFeed}" />
+    </bean>
+
+
     <bean id="hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
         <property name="charset" value="iso-8859-1"/>
+    </bean>
+
+    <bean id="prefixLookup" class="org.openehealth.ipf.ws.PrefixLookup">
+       <property name="prefixMap">
+           <map>
+               <entry key ="1.2.840.113619.20.2.2.50.1" value="SV"/>
+               <entry key ="1.2.840.113619.20.2.2.50.2" value="GR"/>
+           </map>
+       </property>
     </bean>
 
 
