@@ -5,8 +5,12 @@
     <groupId>org.openehealth.ipf.ws</groupId>
     <artifactId>ormregistry</artifactId>
     <name>ormregistry</name>
-    <version>3.3-SNAPSHOT</version>
+    <version>4.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+     <properties>
+	    <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+	</properties>
 
     <dependencies>
         <dependency>
@@ -95,6 +99,11 @@
             <version>1.6.1</version>
         </dependency>
         <dependency>
+	       <groupId>org.springframework</groupId>
+	       <artifactId>spring-jdbc</artifactId>
+	      <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>3.0.4.RELEASE</version>
@@ -105,6 +114,16 @@
             <artifactId>junit</artifactId>
             <version>4.7</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 

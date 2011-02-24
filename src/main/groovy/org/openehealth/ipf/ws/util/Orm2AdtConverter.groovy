@@ -6,6 +6,9 @@ import ca.uhn.hl7v2.model.v231.message.ADT_A01
 import org.openehealth.ipf.modules.hl7dsl.MessageAdapter
 import org.openehealth.ipf.ws.OrmConfiguration
 import org.openehealth.ipf.ws.PrefixLookup
+import org.openehealth.ipf.ws.hospital.HospitalServiceImpl
+import org.apache.commons.logging.LogFactory
+import org.apache.commons.logging.Log
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,6 +19,10 @@ import org.openehealth.ipf.ws.PrefixLookup
  */
 class Orm2AdtConverter implements  Processor{
 
+      private static final transient Log LOG = LogFactory.getLog(Orm2AdtConverter)
+
+
+
   void process(Exchange exchange) {
     def msg = exchange.in.body
     ADT_A01 adtMsg = new ADT_A01()
@@ -25,9 +32,15 @@ class Orm2AdtConverter implements  Processor{
     adtAdapter.MSH[9][2] = 'A01'
     adtAdapter.EVN[2]=Convert.getEventDateTime()
     adtAdapter.PID = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID
-    def prefixMap = PrefixLookup.prefixMap
-    def prefix = prefixMap.get(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
-    adtAdapter.PID[3][1] = prefix + "_" + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
+    //
+   HospitalServiceImpl hospitalService = new HospitalServiceImpl()
+   def hospital = hospitalService.getHospitalByDomainId(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
+   if (hospital != null) {
+             LOG.debug("Hospital: " + hospital)
+   }
+   //def prefixMap = PrefixLookup.prefixMap
+   // def prefix = prefixMap.get(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
+    adtAdapter.PID[3][1] = hospital.prefix + "_" + msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][1].value
     adtAdapter.PID[3][4][1] = OrmConfiguration.sourceName;
     adtAdapter.PID[3][4][2] = OrmConfiguration.sourceID;
     adtAdapter.PV1 = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PV1PV2.PV1

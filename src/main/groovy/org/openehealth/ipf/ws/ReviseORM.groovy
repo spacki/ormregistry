@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
+import org.openehealth.ipf.ws.hospital.HospitalServiceImpl
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,9 +33,15 @@ class ReviseORM implements  Processor {
      def msg = exchange.in.body
      ReviseORMRequest reviseORMRequest = new ReviseORMRequest()
      OrderFull orderFull = new OrderFull()
+     //hospital
+     HospitalServiceImpl hospitalService = new HospitalServiceImpl()
+     def hospital = hospitalService.getHospitalByDomainId(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
+     if (hospital != null) {
+             LOG.debug("Hospital: " + hospital)
+     }
      GPHospitalDomainNameDetail hospitalName = new GPHospitalDomainNameDetail()
-     hospitalName.hospitalDomainName = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
-     hospitalName.hospitalDomainId   = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
+     hospitalName.hospitalDomainName = hospital.domainName //msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
+     hospitalName.hospitalDomainId   = hospital.domainId   //msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
      orderFull.hospitalDomainName = hospitalName
     //LocalPatientIdentifier
      GPPatientIdentifier localPatientIdentifier = new GPPatientIdentifier()
@@ -63,7 +70,7 @@ class ReviseORM implements  Processor {
      orderFull.genderCode = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[8].value
      orderFull.scheduledVisitDate = Convert.convertDateTime(msg.ORCRQDRQ1NTEOBXNTEBLG.ORC[7][4].value)
      orderFull.orderDesc = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[4][2].value
-     orderFull.orderID = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[3].value
+     orderFull.orderID = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[19].value
      orderFull.orderStudyInstanceUID = msg.ORCRQDRQ1NTEOBXNTEBLG.ZDS[1][1].value
      reviseORMRequest.order = orderFull
      LOG.debug("Revise Request Parameter")

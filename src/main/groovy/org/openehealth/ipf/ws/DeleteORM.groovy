@@ -6,6 +6,7 @@ import org.openehealth.ipf.ws.stub.DeleteORMRequest
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.openehealth.ipf.ws.stub.GPHospitalDomainNameDetail
+import org.openehealth.ipf.ws.hospital.HospitalServiceImpl
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,11 +22,16 @@ class DeleteORM implements Processor {
   void process(Exchange exchange) {
      def msg = exchange.in.body
      DeleteORMRequest deleteORMRequest = new DeleteORMRequest()
+     HospitalServiceImpl hospitalService = new HospitalServiceImpl()
+     def hospital = hospitalService.getHospitalByDomainId(msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value);
+     if (hospital != null) {
+             LOG.debug("Hospital: " + hospital)
+     }
      GPHospitalDomainNameDetail hospitalName = new GPHospitalDomainNameDetail()
-     hospitalName.hospitalDomainName = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
-     hospitalName.hospitalDomainId   = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
+     hospitalName.hospitalDomainName = hospital.domainName   //msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][1].value
+     hospitalName.hospitalDomainId   = hospital.domainId  //msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
      deleteORMRequest.hospitalDomainName = hospitalName
-     deleteORMRequest.order = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[3].value
+     deleteORMRequest.order = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[19].value
      //deleteORMRequest.hospitalDomainId = msg.PIDPD1NTEPV1PV2IN1IN2IN3GT1AL1.PID[3][4][2].value
      deleteORMRequest.acNoValue = msg.ORCRQDRQ1NTEOBXNTEBLG.OBR[18].value
      LOG.debug("Delete request Parameter")
